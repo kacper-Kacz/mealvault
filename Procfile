@@ -1,1 +1,1 @@
-web: gunicorn mealvault.wsgi
+web: gunicorn mealvault.wsgi:application --bind 0.0.0.0:$PORT
