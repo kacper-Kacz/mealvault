@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{% if mode == "create" %}New Recipe{% else %}Edit Recipe{% endif %}</h1>
+
+<form method="post" class="mt-3" novalidate>
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary" name="save_recipe" type="submit">Save</button>
+  <a class="btn btn-outline-dark" href="{% url 'vault:recipe_list' %}">Back</a>
+</form>
+
+{% if mode == "edit" %}
+  <hr>
+  <h2 class="h5">Add Ingredient</h2>
+  <form method="post" novalidate class="row g-2 align-items-end">
+    {% csrf_token %}
+    <div class="col-md-5">{{ ingredient_form.name.label_tag }} {{ ingredient_form.name }}</div>
+    <div class="col-md-3">{{ ingredient_form.quantity.label_tag }} {{ ingredient_form.quantity }}</div>
+    <div class="col-md-2">{{ ingredient_form.unit.label_tag }} {{ ingredient_form.unit }}</div>
+    <div class="col-md-2 d-grid">
+      <button class="btn btn-dark" name="add_ingredient" type="submit">Add</button>
+    </div>
+  </form>
+
+  <div class="mt-3">
+    <h3 class="h6">Current ingredients</h3>
+    <ul class="list-group">
+      {% for ing in recipe.ingredients.all %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <span>{{ ing.name }} — {{ ing.quantity|floatformat:2 }} {{ ing.unit }}</span>
+          <form method="post" action="{% url 'vault:ingredient_delete' ing.pk %}">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-danger">Remove</button>
+          </form>
+        </li>
+      {% empty %}
+        <li class="list-group-item">None yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+{% endblock %}

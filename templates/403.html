@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Access denied</h1>
+<p>You don’t have permission to view that.</p>
+<a class="btn btn-primary" href="{% url 'core:home' %}">Home</a>
+{% endblock %}

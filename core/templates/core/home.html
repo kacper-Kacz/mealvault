@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-4 bg-light rounded">
+  <h1 class="mb-2">MealVault</h1>
+  <p class="mb-3">
+    Save your recipes, build weekly meal plans, and (optionally) unlock Premium recipe packs.
+    Premium content is protected behind Stripe test payments.
+  </p>
+  <div class="d-flex gap-2 flex-wrap">
+    <a class="btn btn-dark" href="{% url 'vault:recipe_list' %}">Browse Recipes</a>
+    {% if user.is_authenticated %}
+      <a class="btn btn-outline-dark" href="{% url 'vault:mealplan_list' %}">Your Meal Plans</a>
+    {% else %}
+      <a class="btn btn-outline-dark" href="{% url 'accounts:signup' %}">Create account</a>
+    {% endif %}
+    <a class="btn btn-primary" href="{% url 'payments:pricing' %}">Go Premium</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Delete Meal Plan</h1>
+<p>Are you sure you want to delete <strong>{{ plan.name }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger">Delete</button>
+  <a class="btn btn-outline-dark" href="{% url 'vault:mealplan_detail' plan.pk %}">Cancel</a>
+</form>
+{% endblock %}

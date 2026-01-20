@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Delete Recipe</h1>
+<p>Are you sure you want to delete <strong>{{ recipe.title }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger">Delete</button>
+  <a class="btn btn-outline-dark" href="{% url 'vault:recipe_detail' recipe.pk %}">Cancel</a>
+</form>
+{% endblock %}

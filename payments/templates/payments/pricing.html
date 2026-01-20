@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Premium</h1>
+<p>
+  Premium unlocks premium-marked recipes in the public recipe list and inside your meal plans.
+  Uses Stripe <strong>test mode</strong>.
+</p>
+
+<div class="card p-3" style="max-width: 520px;">
+  <h2 class="h4 mb-2">Premium Pass</h2>
+  <p class="mb-1">One-time test payment</p>
+  <p class="mb-3"><strong>£{{ price_gbp }}</strong></p>
+
+  {% if user.is_authenticated %}
+    <form method="post" action="{% url 'payments:checkout' %}">
+      {% csrf_token %}
+      <button class="btn btn-primary">Checkout</button>
+    </form>
+  {% else %}
+    <p class="text-muted">You must log in to purchase Premium (so access can be linked to your account).</p>
+    <a class="btn btn-primary" href="{% url 'accounts:login' %}">Login</a>
+  {% endif %}
+</div>
+
+<hr>
+<p class="small text-muted">
+  After checkout, Stripe will redirect you back. Premium activation occurs via webhook (checkout.session.completed).
+</p>
+{% endblock %}
